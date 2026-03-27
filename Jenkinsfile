@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "nikstuff201/OHTU_taks_2"
+        IMAGE_NAME = "nikstuff201/OHTU_task_2"
     }
 
     stages {

@@ -10,17 +10,16 @@ import javafx.scene.layout.VBox;
 
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 
 public class Controller {
 
-    ResourceBundle messageBundle;
-    Locale locale;
+    private Locale locale;
     private double lastFuel;
     private double lastCost;
     private boolean hasResult = false;
     private boolean isInputRight = true;
+    private LocalizationService localizationService = LocalizationService.getInstance();
 
     @FXML
     VBox root;
@@ -57,27 +56,13 @@ public class Controller {
         languageSelection.getItems().addAll("en", "fr", "fa", "ja");
         languageSelection.setValue("en");
         languageSelection.setOnAction(event -> {
-            switch (languageSelection.getValue()) {
-                case "en":
-                    locale = new Locale("en", "US");
-                    break;
-                case "fr":
-                    locale = new Locale("fr", "FR");
-                    break;
-                case "fa":
-                    locale = new Locale("fa", "IR");
-                    break;
-                case "ja":
-                    locale = new Locale("ja", "JP");
-                    break;
-            }
-
-            messageBundle = ResourceBundle.getBundle("messages", locale);
+            locale = new Locale(languageSelection.getValue());
+            LocalizationService localizationService = LocalizationService.getInstance();
+            localizationService.loadStrings(languageSelection.getValue());
             updateTexts();
             updateResult();
         });
-        locale = new Locale("en", "US");
-        messageBundle = ResourceBundle.getBundle("messages", locale);
+        locale = new Locale("en");
 
         root.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
 
@@ -87,7 +72,6 @@ public class Controller {
 
     @FXML
     private void calculateFuel() {
-        String wrongInput = messageBundle.getString("invalid.input");
         try {
 
             String distanceText = txtDistance.getText();
@@ -95,7 +79,7 @@ public class Controller {
             String priceText = txtPrice.getText();
 
             if (distanceText.isEmpty() || consumptionText.isEmpty() || priceText.isEmpty()) {
-                lblResult.setText(wrongInput);
+                lblResult.setText(localizationService.getString("invalid.input"));
                 isInputRight = false;
                 lblResult.setVisible(true);
                 return;
@@ -106,7 +90,7 @@ public class Controller {
             double price = Double.parseDouble(priceText);
 
             if (distance <= 0 || consumption <= 0 || price <= 0) {
-                lblResult.setText(wrongInput);
+                lblResult.setText("invalid.input");
                 isInputRight = false;
                 lblResult.setVisible(true);
                 return;
@@ -118,7 +102,7 @@ public class Controller {
             lastCost = totalCost;
             hasResult = true;
 
-            String resultPattern = messageBundle.getString("result.label");
+            String resultPattern = localizationService.getString("result.label");
 
             String result = MessageFormat.format(
                     resultPattern,
@@ -127,10 +111,11 @@ public class Controller {
             );
 
             lblResult.setText(result);
+            СalculationService.saveCalculation(new CalculationRecord(distance, consumption, price, fuelNeeded, totalCost, "en"));
             isInputRight = true;
             lblResult.setVisible(true);
         } catch (NumberFormatException e) {
-            lblResult.setText(wrongInput);
+            lblResult.setText("invalid.input");
             isInputRight = false;
             lblResult.setVisible(true);
         }
@@ -138,11 +123,11 @@ public class Controller {
     }
 
     private void updateTexts() {
-        lblDistance.setText(messageBundle.getString("distance.label"));
-        lblConsumption.setText(messageBundle.getString("consumption.label"));
-        lblPrice.setText(messageBundle.getString("price.label"));
+        lblDistance.setText(localizationService.getString("distance.label"));
+        lblConsumption.setText(localizationService.getString("consumption.label"));
+        lblPrice.setText(localizationService.getString("price.label"));
 
-        btnCalculate.setText(messageBundle.getString("calculate.button"));
+        btnCalculate.setText(localizationService.getString("calculate.button"));
 
         if (locale.getLanguage().equals("fa")){
             root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
@@ -154,13 +139,13 @@ public class Controller {
 
     private void updateResult(){
         if (!isInputRight){
-            lblResult.setText(messageBundle.getString("invalid.input"));
+            lblResult.setText(localizationService.getString("invalid.input"));
             return;
         }
         if (!hasResult){
             return;
         }
-        String resultPattern = messageBundle.getString("result.label");
+        String resultPattern = localizationService.getString("result.label");
         String result = MessageFormat.format(
                 resultPattern,
                 String.format("%.2f", lastFuel),
@@ -173,6 +158,8 @@ public class Controller {
     }
 
 
-
+    public void setLocale(String language) {
+         this.locale = new Locale(language);
+    }
 }
 

@@ -1,17 +1,15 @@
 package org;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static final Dotenv dotenv = Dotenv.load();
-
-    private static final String URL = dotenv.get("DB_URL");
-    private static final String USER = dotenv.get("DB_USER");
-    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
+    private static final String URL =
+            System.getenv().getOrDefault("TRIP_DB_URL", "jdbc:mariadb://db:3306/fuel_calculator_localization");
+    private static final String USER = System.getenv().getOrDefault("TRIP_DB_USER", "myadmin");
+    private static final String PASSWORD = System.getenv().getOrDefault("TRIP_DB_PASSWORD", "your_strong_password");
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);

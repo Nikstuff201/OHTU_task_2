@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class СalculationService {
+public class CalculationService {
 
 
     public static void saveCalculation(CalculationRecord record) {

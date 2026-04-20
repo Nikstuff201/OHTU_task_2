@@ -1,6 +1,6 @@
 import org.CalculationRecord;
 import org.junit.jupiter.api.Test;
-import org.СalculationService;
+import org.CalculationService;
 
 class CalculationServiceTest {
 
@@ -11,7 +11,7 @@ class CalculationServiceTest {
         );
 
         try {
-            СalculationService.saveCalculation(record);
+            CalculationService.saveCalculation(record);
         } catch (Exception e) {
         }
     }

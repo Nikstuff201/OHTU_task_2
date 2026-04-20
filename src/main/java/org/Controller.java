@@ -112,7 +112,7 @@ public class Controller {
             );
 
             lblResult.setText(result);
-            СalculationService.saveCalculation(new CalculationRecord(distance, consumption, price, fuelNeeded, totalCost, "en"));
+            CalculationService.saveCalculation(new CalculationRecord(distance, consumption, price, fuelNeeded, totalCost, "en"));
             isInputRight = true;
             lblResult.setVisible(true);
         } catch (NumberFormatException e) {

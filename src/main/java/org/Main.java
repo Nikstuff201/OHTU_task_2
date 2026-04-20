@@ -13,7 +13,7 @@ public class Main extends Application {
         Scene scene = new Scene(loader.load());
 
         stage.setScene(scene);
-        stage.setTitle("Fuel Calculator");
+        stage.setTitle("Nikita Rybakov");
         stage.show();
     }
 

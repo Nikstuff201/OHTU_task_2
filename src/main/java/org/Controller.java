@@ -22,39 +22,40 @@ public class Controller {
     private LocalizationService localizationService = LocalizationService.getInstance();
 
     @FXML
-    VBox root;
+    public VBox root;
 
     @FXML
-    Label lblDistance;
+    public Label lblDistance;
 
     @FXML
-    Label lblConsumption;
+    public Label lblConsumption;
 
     @FXML
-    Label lblPrice;
+    public Label lblPrice;
 
     @FXML
-    Label lblResult;
+    public Label lblResult;
 
     @FXML
-    TextField txtDistance;
+    public TextField txtDistance;
 
     @FXML
-    TextField txtConsumption;
+    public TextField txtConsumption;
 
     @FXML
-    TextField txtPrice;
+    public TextField txtPrice;
 
     @FXML
-    Button btnCalculate;
+    public Button btnCalculate;
 
     @FXML
-    ChoiceBox<String> languageSelection;
+    public ChoiceBox<String> languageSelection;
 
     @FXML
     public void initialize() {
         languageSelection.getItems().addAll("en", "fr", "fa", "ja");
         languageSelection.setValue("en");
+        localizationService.loadStrings("en");
         languageSelection.setOnAction(event -> {
             locale = new Locale(languageSelection.getValue());
             LocalizationService localizationService = LocalizationService.getInstance();
@@ -71,7 +72,7 @@ public class Controller {
 
 
     @FXML
-    private void calculateFuel() {
+    public void calculateFuel() {
         try {
 
             String distanceText = txtDistance.getText();
@@ -122,7 +123,7 @@ public class Controller {
 
     }
 
-    private void updateTexts() {
+    public void updateTexts() {
         lblDistance.setText(localizationService.getString("distance.label"));
         lblConsumption.setText(localizationService.getString("consumption.label"));
         lblPrice.setText(localizationService.getString("price.label"));
@@ -137,7 +138,7 @@ public class Controller {
         }
     }
 
-    private void updateResult(){
+    public void updateResult(){
         if (!isInputRight){
             lblResult.setText(localizationService.getString("invalid.input"));
             return;

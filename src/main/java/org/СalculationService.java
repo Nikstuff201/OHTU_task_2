@@ -28,7 +28,6 @@ public class СalculationService {
 
         } catch (SQLException e) {
             System.err.println("Error saving calculation:");
-            e.printStackTrace();
         }
     }
 }

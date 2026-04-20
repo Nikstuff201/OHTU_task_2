@@ -46,7 +46,6 @@ public class LocalizationService {
 
         } catch (SQLException e) {
             System.err.println("Error loading localization strings:");
-            e.printStackTrace();
         }
     }
 

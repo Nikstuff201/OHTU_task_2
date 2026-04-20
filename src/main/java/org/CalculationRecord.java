@@ -43,4 +43,7 @@ public class CalculationRecord {
         return language;
     }
 
+    public boolean isValid() {
+        return distance > 0 && consumption > 0;
+    }
 }

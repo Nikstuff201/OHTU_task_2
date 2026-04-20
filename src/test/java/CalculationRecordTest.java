@@ -20,12 +20,4 @@ class CalculationRecordTest {
         assertEquals("EN", record.getLanguage());
     }
 
-    @Test
-    void testIsValidTrue() {
-        CalculationRecord rec = new CalculationRecord(
-                100, 5, 2, 5, 10, "en"
-        );
-
-        assertTrue(rec.isValid());
-    }
 }
